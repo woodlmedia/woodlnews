@@ -22,10 +22,10 @@ def save_state(d):
     json.dump(d, open(STATE_FILE,"w"), indent=2)
 
 def ask_llm(title, summary):
-    client = InferenceClient(os.environ["HF_TOKEN"])
+    client = InferenceClient(os.environ["HF_TOKEN"], providers=["hf-inference"])
     prompt = f"""Write a neutral-tone entertainment news update (4 short paragraphs, ≤150 words)
 about “{title}”. Base it on: “{summary}”."""
-    resp = client.chat.completions.create(provider="hf-inference", 
+    resp = client.chat.completions.create(
         model=HF_MODEL,
         messages=[{"role":"user","content":prompt}],
         temperature=0.7, max_tokens=280)
