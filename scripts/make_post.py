@@ -25,7 +25,7 @@ def ask_llm(title, summary):
     client = InferenceClient(os.environ["HF_TOKEN"])
     prompt = f"""Write a neutral-tone entertainment news update (4 short paragraphs, ≤150 words)
 about “{title}”. Base it on: “{summary}”."""
-    resp = client.chat.completions.create(
+    resp = client.chat.completions.create(provider="hf-inference", 
         model=HF_MODEL,
         messages=[{"role":"user","content":prompt}],
         temperature=0.7, max_tokens=280)
