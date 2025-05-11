@@ -1,5 +1,6 @@
-﻿feedparser
+feedparser
 python-frontmatter
 python-slugify
 requests
 tweepy
+huggingface_hub
