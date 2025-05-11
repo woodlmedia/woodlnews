@@ -11,7 +11,7 @@ FEEDS = [
 ]
 OUT_DIR   = pathlib.Path("content/posts")
 STATE_FILE = ".seen.json"
-HF_MODEL  = "mistralai/Mistral-7B-Instruct"
+HF_MODEL  = "HuggingFaceH4/zephyr-7b-beta"
 TWEET_FMT = "🎬 {title}\n\nRead more: {url}\n#Movies #TVNews #Hollywood"
 
 def sha(s): return hashlib.sha256(s.encode()).hexdigest()
