@@ -1,0 +1,40 @@
+name: hollywood-newsbot
+on:
+  schedule:
+    - cron: "*/30 * * * *"   # every 30 min
+  workflow_dispatch:
+
+env:
+  SITE_DOMAIN: woodlmedia.github.io     # change if you’ll use a custom domain
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with: { python-version: '3.11' }
+
+      - name: Install Python deps
+        run: pip install -r requirements.txt
+
+      - name: Run bot (write post + tweet)
+        env:
+          HF_TOKEN:            ${{ secrets.HF_TOKEN }}
+          X_CONSUMER_KEY:      ${{ secrets.X_CONSUMER_KEY }}
+          X_CONSUMER_SECRET:   ${{ secrets.X_CONSUMER_SECRET }}
+          X_ACCESS_TOKEN:      ${{ secrets.X_ACCESS_TOKEN }}
+          X_ACCESS_SECRET:     ${{ secrets.X_ACCESS_SECRET }}
+        run: python scripts/make_post.py
+
+      - name: Install Hugo
+        uses: peaceiris/actions-hugo@v3
+        with: { hugo-version: '0.128.0', extended: true }
+
+      - name: Build site
+        run: hugo --minify
+
+      - name: Deploy to Pages
+        uses: actions/deploy-pages@v4

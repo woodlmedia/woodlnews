@@ -1,0 +1,5 @@
+﻿feedparser
+python-frontmatter
+python-slugify
+huggingface_hub
+tweepy
